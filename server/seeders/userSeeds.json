@@ -1,0 +1,52 @@
+[
+{
+  "username": "brian_kernighan",
+  "email": "brian@example.com",
+  "password": "brian123"
+},
+{
+  "username": "max_ka_alex",
+  "email": "max@example.com",
+  "password": "max456"
+},
+{
+  "username": "amiko_dev",
+  "email": "amiko@example.com",
+  "password": "amiko789"
+},
+{
+  "username": "kent_beck_dev",
+  "email": "kent@example.com",
+  "password": "kent1011"
+},
+{
+  "username": "edward_berard",
+  "email": "edward@example.com",
+  "password": "edward1213"
+},
+{
+  "username": "alan_kay_gui",
+  "email": "alan@example.com",
+  "password": "alan1415"
+},
+{
+  "username": "car_hoare_algo",
+  "email": "car@example.com",
+  "password": "car1617"
+},
+{
+  "username": "david_thomas_code",
+  "email": "david@example.com",
+  "password": "david1819"
+},
+{
+  "username": "donald_knuth_algo",
+  "email": "donald@example.com",
+  "password": "donald2021"
+},
+{
+  "username": "lernantino_dev",
+  "email": "lernantino@example.com",
+  "password": "lernantino2223"
+}
+]
