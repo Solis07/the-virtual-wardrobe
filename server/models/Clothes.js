@@ -11,6 +11,15 @@ const clothesSchema = new Schema({
     type: String,
     required: true,
   },
+  price: {
+    type: Number,
+    min: 0.99,
+    required: true,
+  },
+  size: {
+    type: String,
+    required: true,
+  },
   // saved clothe id from
   clothesId: {
     type: String,

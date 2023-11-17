@@ -16,6 +16,8 @@ const typeDefs = gql`
     clothesId: String
     seller: [String]
     description: String
+    price: Int
+    size: String
     title: String
     image: String
     link: String
