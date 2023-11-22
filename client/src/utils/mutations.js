@@ -1,3 +1,5 @@
+import { gql } from '@apollo/client';
+
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
@@ -6,7 +8,7 @@ export const ADD_USER = gql`
         _id
         username
         email
-        saveClothes {
+        savedClothes {
           sellers
           clothesId
           description
@@ -58,12 +60,3 @@ export const SAVE_CLOTHES = gql`
       }
     }
   `;
-
-
-
-
-
-
-
-
-
