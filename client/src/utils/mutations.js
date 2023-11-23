@@ -9,7 +9,7 @@ export const ADD_USER = gql`
         username
         email
         savedClothes {
-          sellers
+          seller
           clothesId
           description
           price

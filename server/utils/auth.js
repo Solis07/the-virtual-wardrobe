@@ -7,7 +7,7 @@ const expiration = "2h";
 module.exports = {
   // Added 'res' and 'next' to 'authMiddleware: function':
   // Could be written as 'authMiddleware: function ({ req, res }, next) {'
-  authMiddleware: function ({ req, res}, next) {
+  authMiddleware: function ({ req, res }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
 
     // ["Bearer", "<tokenvalue>"]
@@ -16,25 +16,20 @@ module.exports = {
     }
 
     if (!token) {
-      // return req;
-      // Added this line:
-      return res.status(401).json({ message: 'Missing token.' });
+      return req;
     }
 
     // verify token and get user data out of it
     try {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.user = data;
-      // Added 'next()' after successfully verifiying token:
-      return next();
 
     } catch {
       console.log("Invalid token");
       return res.status(401).json({ message: "invalid token!" });
     }
-    // Commented out these two lines:
-    // next();
-    // return req;
+    
+    return req;
   },
 
   signToken: function ({ username, email, _id }) {
