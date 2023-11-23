@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App.jsx";
 import SignupForm from "./pages/SignupForm.jsx"
+import LoginForm from "./pages/LoginForm.jsx"
 // import SearchClothes from "./pages/SearchClothes";
 // import SavedClothes from "./pages/SavedClothes";
 
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignupForm />
+      },
+      {
+        path: "/login",
+        element: <LoginForm />
       }
     //   {
     //     index: true,
