@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 // Does "import { Link }" do anything?
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from "../utils/mutations";
@@ -110,6 +110,9 @@ const SignupForm = () => {
           Submit
         </Button>
       </Form>
+      <Link className="link-btn" to="/login">
+        Already have an account? Login!
+      </Link>
     </>
   );
 };
@@ -117,39 +120,4 @@ const SignupForm = () => {
 export default SignupForm;
 
 
-  // Comment out to see if SignupForm.jsx can work:
-    // check if form has everything (as per react-bootstrap docs)
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
-
-    // try {
-    //   const { data } = await addUser({ variables: {...userFormData },});
-
-      // if (!response.ok) {
-      //   throw new Error('something went wrong!');
-      // }
-      // const { token, user } = await response.json();
-      // console.log(user);
-      // Auth.login(data.addUser.token);
-
-      // console.log(userFormData.username);
-
-
-    // } catch (err) {
-    //   console.error(err);
-    //   setShowAlert(true);
-    // }
-
-    // setUserFormData({
-    //   username: '',
-    //   email: '',
-    //   password: '',
-    // });
-
-    // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   setUserFormData({ ...userFormData, [name]: value });
-  // };
+  
