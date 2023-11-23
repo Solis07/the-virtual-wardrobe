@@ -1,13 +1,10 @@
 const jwt = require("jsonwebtoken");
 
 const secret = "mysecretsshhhhh";
-// 'expiration' at '2h' for testing purposes:
 const expiration = "2h";
 
 module.exports = {
-  // Added 'res' and 'next' to 'authMiddleware: function':
-  // Could be written as 'authMiddleware: function ({ req, res }, next) {'
-  authMiddleware: function ({ req, res }) {
+  authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
 
     // ["Bearer", "<tokenvalue>"]
