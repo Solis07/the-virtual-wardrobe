@@ -1,9 +1,10 @@
 const express = require("express");
-const path = require("path");
-const db = require("./config/connection");
 const { ApolloServer } = require("apollo-server-express");
-const { typeDefs, resolvers } = require("./schema");
+const path = require("path");
+
 const { authMiddleware } = require("./utils/auth");
+const db = require("./config/connection");
+const { typeDefs, resolvers } = require("./schema");
 
 const app = express();
 const server = new ApolloServer({
@@ -11,12 +12,12 @@ const server = new ApolloServer({
   resolvers,
   context: authMiddleware,
 });
+
 const PORT = process.env.PORT || 3001;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
@@ -39,5 +40,4 @@ const startApolloServer = async () => {
   });
 };
 
-// Call the async function to start the server
 startApolloServer();
