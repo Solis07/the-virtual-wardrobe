@@ -1,14 +1,14 @@
-export const getSavedClotheIds = () => {
+export const getSavedClothesIds = () => {
     // Retrieve the value stored in localStorage under the key 'saved_clothes'
-    const savedClotheIds = localStorage.getItem('saved_clothes')
+    const savedClothesIds = localStorage.getItem('saved_clothes')
       ? JSON.parse(localStorage.getItem('saved_clothes'))
       // If the value doesn't exist, set an empty array
       : [];
   
-    return savedClotheIds;
+    return savedClothesIds;
   };
   
-  export const saveClotheIds = (clotheIdArr) => {
+  export const saveClothesIds = (clotheIdArr) => {
     if (clotheIdArr.length) {
       localStorage.setItem('saved_clothes', JSON.stringify(clotheIdArr));
     } else {
@@ -16,17 +16,17 @@ export const getSavedClotheIds = () => {
     }
   };
   
-  export const removeClotheId = (clotheId) => {
-    const savedClotheIds = localStorage.getItem('saved_clothes')
+  export const removeClothesId = (clothesId) => {
+    const savedClothesIds = localStorage.getItem('saved_clothes')
       ? JSON.parse(localStorage.getItem('saved_clothes'))
       : null;
   
-    if (!savedClotheIds) {
+    if (!savedClothesIds) {
       return false;
     }
   
-    const updatedSavedClotheIds = savedClotheIds?.filter((savedClotheId) => savedClotheId !== clotheId);
-    localStorage.setItem('saved_clothes', JSON.stringify(updatedSavedClotheIds));
+    const updatedSavedClothesIds = savedClothesIds?.filter((savedClothesId) => savedClothesId !== clothesId);
+    localStorage.setItem('saved_clothes', JSON.stringify(updatedSavedClothesIds));
   
     return true;
   };
