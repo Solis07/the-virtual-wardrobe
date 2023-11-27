@@ -1,4 +1,3 @@
-// File based off of Module 21 Challenge (before being revised to GraphQL application?):
 import { useState, useEffect } from 'react';
 
 import {
@@ -11,32 +10,42 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-// Link to Amazon Prices API (commented out to test code):
-// 'searchClothes' is part of 'try-catch' block below.
-import { saveClothes, searchClothes } from '../utils/API';
+
+import { searchClothes } from '../utils/API';
+import { GET_ME } from '../utils/queries';
+import { SAVE_CLOTHES } from '../utils/mutations';
 import { saveClothesIds, getSavedClothesIds } from '../utils/localStorage';
+import { useMutation } from '@apollo/client';
 
 const SearchClothes = () => {
-    // State for holding returned Amazon Prices API data:
+    // Empty array 'state' holds returned Amazon Prices API data:
     const [searchedClothes, setSearchedClothes] = useState([]);
 
-    // State for holding search field data (searching for clothes?):
+    // Empty quotes 'state' holds search field data:
     const [searchInput, setSearchInput] = useState('');
 
-    // State to hold saved clothesId values:
+    // 'getSavedClothesIds()' function 'state' holds local storage 'saved_clothes':
     const [savedClothesIds, setSavedClothesIds] = useState(getSavedClothesIds());
 
-    // useEffect hook will save 'savedClothesIds' list to localStorage (on component unmount?):
-    useEffect(() => {
-        return () => saveClothesIds(savedClothesIds);
+    // Method to search for clothes and set state on form submit:
+    const [error, setError] = useState(null);
+
+    // 'useMutation' hook needs to be called at the 'top level' (not within other functions):
+    const [saveClothesMutation, { mutationError }] = useMutation(SAVE_CLOTHES, {
+        refetchQueries: [
+            GET_ME,
+            'Me'
+        ]
     });
 
-    // Method to search for clothes and set state on from submit:
+    // useEffect hook will save 'savedClothesIds' list to localStorage.
+    // Setting 'savedClothesIds' in the dependency array means the effect will run whenever 'savedClothesIds' changes:
+    useEffect(() => {
+        return () => saveClothesIds(savedClothesIds);
+    }, [savedClothesIds]);
+    
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-
-        // This is returning the 'searchInput' typed into the search bar:
-        console.log(searchInput);
 
         if(!searchInput) {
             return false;
@@ -49,35 +58,29 @@ const SearchClothes = () => {
                 throw new Error('Something went wrong.');
             }
 
-            // Commented out this section because it seems like '{ items }' is an undefined object:
-            // const { items } = await response.json();
-
             const responseData = await response.json();
-            
-            // Commented out line because trying to check if 'responseData' is an array first (then mapping over it):
-            // const clothesData = items.map((clothes) => ({
-            
-            const clothesData = Array.isArray(responseData.items)
-                ? responseData.items.map((clothes) => ({
-                clothesId: clothes.id,
-                seller: clothes.clothesInfo.seller || ['No seller to display'],
-                description: clothes.clothesInfo.description,
-                price: clothes.clothesInfo.price,
-                size: clothes.clothesInfo.size,
-                image: clothes.clothesInfo.imageLinks?.thumbnail || '',
-                link: clothes.clothesInfo.link,
-                title: clothes.clothesInfo.title
-                }))
-                : [];
+
+            if (Array.isArray(responseData)) {
+            const clothesData = responseData.map((clothes) => ({
+                    clothesId: clothes.ASIN,
+                    title: clothes.title,
+                    price: clothes.price,
+                    image: clothes.imageUrl
+                }));
 
             setSearchedClothes(clothesData);
             setSearchInput('');
+            
+            } else {
+                console.error('Invalid response format:', responseData)
+            }
+
         } catch (err) {
-            console.error(err);
+            setError(err.message);
         }
     };
 
-    // Function to save clothes to database:
+    // Function saves clothes to database:
     const handleSaveClothes = async (clothesId) => {
         // Find the clothes in 'searchedClothes' state by id:
         const clothesToSave = searchedClothes.find((clothes) => clothes.clothesId === clothesId);
@@ -85,12 +88,17 @@ const SearchClothes = () => {
         // Get token:
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
+        // This responds with a token value:
+        console.log(token);
+
         if (!token) {
             return false;
         }
 
         try {
-            const response = await saveClothes(clothesToSave, token);
+            const response = await saveClothesMutation({
+                variables: { clothesData: clothesToSave, token },
+            });
 
             if (!response.ok) {
                 throw new Error('Something went wrong.');
@@ -134,6 +142,7 @@ const SearchClothes = () => {
             </div>
 
             <Container>
+                {error && <p>Error: {error}</p>}
                 <h2 className='pt-5'>
                     {searchedClothes.length
                         ? `Viewing ${searchedClothes.length} results:`
@@ -147,23 +156,22 @@ const SearchClothes = () => {
                                     {clothes.image ? (
                                         <Card.Img src={clothes.image} alt={`The image of ${clothes.title}`} variant='top' />
                                     ) : null}
-                                    <Card.body>
-                                        <Card.title>{clothes.title}</Card.title>
-                                        <p className='small'>Seller: {clothes.seller}</p>
-                                        <Card.text>{clothes.description}</Card.text>
-                                        {Auth.loggedIn() && (
-                                            <Button
-                                                disabled={savedClothesIds?.some((savedClothesId) => savedClothesId === clothes.clothesId)}
-                                                className='btn-block btn-info'
-                                                onClick={() => handleSaveClothes(clothes.clothesId)}>
-                                                    {savedClothesIds?.some((savedClothesId) => savedClothesId === clothes.clothesId)
-                                                    ? 'These clothes have already been saved.'
-                                                    : 'Save these clothes.'}
+                                        <Card.Body>
+                                            <Card.Title>{clothes.title}</Card.Title>
+                                            <p className='small'>Price: {clothes.price}</p>
+                                            {Auth.loggedIn() && (
+                                                <Button
+                                                    disabled={savedClothesIds?.some((savedClothesId) => savedClothesId === clothes.clothesId)}
+                                                    className='btn-block btn-info'
+                                                    onClick={() => handleSaveClothes(clothes.clothesId)}>
+                                                        {savedClothesIds?.some((savedClothesId) => savedClothesId === clothes.clothesId)
+                                                        ? 'These clothes have already been saved.'
+                                                        : 'Save these clothes.'}
                                                 </Button>
-                                        )}
-                                    </Card.body>
+                                            )}
+                                        </Card.Body>
                                 </Card>
-                            // </Col>
+                            </Col>
                         );
                     })}
                 </Row>

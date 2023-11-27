@@ -1,31 +1,18 @@
 import { gql } from "@apollo/client";
+
+{/* Changed GET_ME properties so it's 'clothesId', 'title', 'price', and 'image' (same as SearchClothes.jsx') */}
 export const GET_ME = gql`
   query Me {
     me {
       _id
       email
       savedClothes {
-        sellers
         clothesId
-        description
-        price
-        size
-        image
-        link
-        title
+          title
+          price
+          image
       }
       username
     }
   }
 `;
-
-
-
-
-
-
-
-
-
-
-
