@@ -7,10 +7,14 @@ module.exports = {
   authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
 
+    // console.log('req.headers.authorization:', req.headers.authorization);
+    
     // ["Bearer", "<tokenvalue>"]
     if (req.headers.authorization) {
       token = token.split(" ").pop().trim();
     }
+
+    // console.log('token', token);
 
     if (!token) {
       return req;
@@ -18,12 +22,17 @@ module.exports = {
 
     // verify token and get user data out of it
     try {
+      // console.log(token);
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
-      req.user = data;
 
-    } catch {
-      console.log("Invalid token");
-      return res.status(401).json({ message: "invalid token!" });
+      // console.log('data', data);
+
+      req.user = data;
+      // console.log('Decoded user:', req.user);
+
+    } catch (error) {
+      console.log(error);
+      return req;
     }
     
     return req;

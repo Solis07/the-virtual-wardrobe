@@ -30,11 +30,10 @@ const SearchClothes = () => {
     // Method to search for clothes and set state on form submit:
     const [error, setError] = useState(null);
 
-    // 'useMutation' hook needs to be called at the 'top level' (not within other functions):
+    // Writing 'saveClothesMutation' this way causes a response to and from GraphQL:
     const [saveClothesMutation, { mutationError }] = useMutation(SAVE_CLOTHES, {
         refetchQueries: [
-            GET_ME,
-            'Me'
+            { query: GET_ME },
         ]
     });
 
@@ -88,26 +87,29 @@ const SearchClothes = () => {
         // Get token:
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-        // This responds with a token value:
-        console.log(token);
-
         if (!token) {
             return false;
         }
 
         try {
             const response = await saveClothesMutation({
-                variables: { clothesData: clothesToSave, token },
+                variables: { clothesData: { ...clothesToSave }},
+                context: {
+                    headers: {
+                        Authorization: token ? `Bearer ${token}` : '',
+                    },
+                },
             });
 
-            if (!response.ok) {
-                throw new Error('Something went wrong.');
+            if (response.errors) {
+                throw new Error(response.errors[0].message);
             }
 
             // If clothes successfully saves to user's account, save clothes id to state:
             setSavedClothesIds([...savedClothesIds, clothesToSave.clothesId]);
         } catch (err) {
             console.error(err);
+            setError(err.message);
         }
     };
 
