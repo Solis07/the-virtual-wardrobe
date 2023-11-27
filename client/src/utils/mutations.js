@@ -10,6 +10,8 @@ export const LOGIN = gql`
     }
   }
 `;
+
+{/* Changed ADD_USER properties so it's 'clothesId', 'title', 'price', and 'image' (same as SearchClothes.jsx') */}
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
@@ -19,54 +21,46 @@ export const ADD_USER = gql`
         username
         email
         savedClothes {
-          seller
           clothesId
-          description
-          price
-          size
-          image
-          link
           title
+          price
+          image
         }
       }
     }
   }
 `;
+
+{/* Changed SAVE_CLOTHES properties so it's 'clothesId', 'title', 'price', and 'image' (same as SearchClothes.jsx') */}
 export const SAVE_CLOTHES = gql`
-  mutation saveClothes($input: ClothesInput) {
+  mutation saveClothes($input: clothesInput) {
     saveClothes(input: $input) {
         _id
         username
         email
-        saveClothes {
+        savedClothes {
           clothesId
-          sellers
-          description
-          price
-          size
-          image
-          link
           title
+          price
+          image
         }
       }
     }
   `;
-  export const REMOVE_CLOTHES = gql`
-    mutation removeClothes($clothesId: String!) {
-      removeClothes(clothesId: $clothesId) {
-        _id
-        username
-        email
-        saveClothes {
-          clothesId
-          sellers
-          description
-          price
-          size
-          image
-          link
-          title
-        }
-      }
+
+{/* Changed REMOVE_CLOTHES properties so it's 'clothesId', 'title', 'price', and 'image' (same as SearchClothes.jsx') */}
+export const REMOVE_CLOTHES = gql`
+mutation removeClothes($clothesId: String!) {
+  removeClothes(clothesId: $clothesId) {
+    _id
+    username
+    email
+    saveClothes {
+      clothesId
+      title
+      price
+      image
     }
-  `;
+  }
+}
+`;

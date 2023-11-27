@@ -5,6 +5,11 @@ const typeDefs = gql`
     me: User
   }
 
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type User {
     _id: ID
     username: String
@@ -14,19 +19,17 @@ const typeDefs = gql`
 
   type Clothes {
     clothesId: String
-    seller: [String]
-    description: String
-    price: Int
-    size: String
     title: String
+    price: String
     image: String
-    link: String
   }
 
-  type Auth {
-    token: ID!
-    user: User
-  }
+  input clothesInput {
+    clothesId: String
+    title: String
+    price: String
+    image: String
+  } 
 
   type Mutation {
     login(email: String!, password: String!): Auth
@@ -34,15 +37,6 @@ const typeDefs = gql`
     saveClothes(input: clothesInput): User
     removeClothes(clothesId: ID!): User
   }
-
-  input clothesInput {
-    clothesId: String
-    type: [String]
-    description: String
-    title: String
-    image: String
-    link: String
-  } 
 `;
 
 module.exports = typeDefs;
