@@ -1,11 +1,10 @@
 export const searchClothes = (query) => {
     return fetch (`https://amazon-price1.p.rapidapi.com/search?keywords=${encodeURIComponent(query)}&marketplace=ES`, {
-    // return fetch ('https://amazon-price1.p.rapidapi.com/search?keywords=(query)&marketplace=ES', {
     method: 'GET',
     headers: {
-                // Scott's API key:
-                'X-RapidAPI-Key': 'eba211f217msh5da548400280abbp19a48fjsn348dcefde8b0',
+                // Scott's 2nd API key:
+                'X-RapidAPI-Key': 'fbb18ab978mshb989aa61e361521p1291fbjsn12f25c17f65d',
                 'X-RapidAPI-Host': 'amazon-price1.p.rapidapi.com'
             }
         })
-}
+};
