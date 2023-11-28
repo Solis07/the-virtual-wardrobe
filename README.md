@@ -1,44 +1,49 @@
-# The-virtual-wardrobe
+# the-virtual-wardrobe
 
 ## Description:
-In this application, we worked on The virtual wardrobe API search engine built with a RESTful API and refactored it to be a GraphQL API built with Apollo Server. The app was built using the MERN stack with a React front end, MongoDB database, and Node.js/Express.js server and API. It's already set up to allow users to save item searches to the back end.
+
+This application is called "The Virtual Wardrobe." It is a MERN-stack single-page app that integrates the "Amazon Price" API. Users can do a general search for clothes (like "shoes") and it will return data from Amazon, including the title, price, and image of up to 10 products. 
+
+This app uses MongoDB, Express, React, Node, and GraphQL. Users can save clothes that they like in the database and look at them again later, deciding whether to keep or delete them.
 
 ## Table of Contents
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
-- [Contribute](#contribute)
+- [Contributors](#contribute)
 - [Badges](#badges)
-- [Username](#username)
-- [Email](#email)
-- 
-## Installation:
-Install using the package manager.
 
-`npm install`
+## Installation:
+
+This app can be viewed online at:
+
+[the-virtual-wardrobe](insert web address here)
 
 ## Usage
-Start the application by typing this command(client & server):
- 
-  `npm run develop`
+
+Look at this app to get a basic understanding of how an e-commerce site is set up.
 
 ## License
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Contributing Guidelines:
-Please contact us if you have any questions `Email`
+## Contributors:
 
-sjdoublec@gmail.com 
+Please contact us if you have any questions via email:
 
-l.jsolis52@yahoo.com
+Scott: sjdoublec@gmail.com 
 
-kiarajohnson91@gmail.com
+Leonel: l.jsolis52@yahoo.com
 
-amberdiehl@outlook.com
+Kiara: kiarajohnson91@gmail.com
 
-farjana.akhter085@gmail.com
+Amber: amberdiehl@outlook.com
+
+Farjana: farjana.akhter085@gmail.com
 
 ## Badges:
+
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://www.javascript.com/)
 
 [![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
