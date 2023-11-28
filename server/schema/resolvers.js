@@ -64,6 +64,7 @@ const resolvers = {
     },
 
     removeClothes: async (parent, args, context) => {
+      console.log('HELLO!');
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
       {
@@ -71,7 +72,7 @@ const resolvers = {
       },
       {
         $pull: {
-          savedClothess: {
+          savedClothes: {
             clothesId: args.clothesId,
           },
         },

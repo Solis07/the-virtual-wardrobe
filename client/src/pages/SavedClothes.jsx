@@ -19,7 +19,11 @@ const SaveClothes = () => {
 
   const { loading, data } = useQuery(GET_ME);
   // Added '{ error }' after 'removeClothes' (but where should this error be used?): 
-  const [removeClothes, { error }] = useMutation(REMOVE_CLOTHES);
+  const [removeClothes, { error }] = useMutation(REMOVE_CLOTHES, {
+    refetchQueries: [
+      { query: GET_ME },
+  ]
+  })
   
   // Checks if 'data' object is defined, then looks for 'me' property within 'data' object.
   // (When accessing nested properties it's helpful to check if intermediate levels exist.)
@@ -43,9 +47,13 @@ const SaveClothes = () => {
         },
       });
 
-      if (!response.ok) {
-        throw new Error("Something went wrong!");
-      }
+      console.log(response);
+
+      // if (!response.ok) {
+      //   throw new Error("Something went wrong!");
+      // }
+
+
 
       removeClothesId(clothesId);
 
