@@ -13,6 +13,7 @@ This app uses MongoDB, Express, React, Node, and GraphQL. Users can save clothes
 - [License](#license)
 - [Contributors](#contribute)
 - [Badges](#badges)
+- [Screenshot](#screenshot)
 
 ## Installation:
 
@@ -53,3 +54,7 @@ Farjana: farjana.akhter085@gmail.com
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 
 [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+
+## Screenshot:
+
+![the-virtual-wardrobe](/assets/spider-man-hoodies-screenshot.png)
