@@ -5,7 +5,7 @@ import App from "./App.jsx";
 import SignupForm from "./pages/SignupForm.jsx"
 import LoginForm from "./pages/LoginForm.jsx"
 import SearchClothes from "./pages/SearchClothes.jsx";
-// import SavedClothes from "./pages/SavedClothes.jsx";
+import SavedClothes from "./pages/SavedClothes.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,10 +25,10 @@ const router = createBrowserRouter([
         index: true,
         element: <SearchClothes />,
       },
-    //   {
-    //     path: "/saved",
-    //     element: <SavedClothes />,
-    //   },
+      {
+        path: "/saved",
+        element: <SavedClothes />,
+      },
     ],
   },
 ]);

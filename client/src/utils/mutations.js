@@ -50,12 +50,12 @@ export const SAVE_CLOTHES = gql`
 
 {/* Changed REMOVE_CLOTHES properties so it's 'clothesId', 'title', 'price', and 'image' (same as SearchClothes.jsx') */}
 export const REMOVE_CLOTHES = gql`
-mutation removeClothes($clothesId: String!) {
+mutation removeClothes($clothesId: ID!) {
   removeClothes(clothesId: $clothesId) {
     _id
     username
     email
-    saveClothes {
+    savedClothes {
       clothesId
       title
       price
