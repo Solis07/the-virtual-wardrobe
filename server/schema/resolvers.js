@@ -5,11 +5,10 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       
-      console.log('context.user:', context.user);
+      console.log("Context.user from 'me' in 'resolvers':", context.user); // Returns 'undefined'
 
       if (context.user) {
         const user = await User.findOne({ _id: context.user._id });
-        console.log('user:', user);
         return user;
       }
       throw new Error('User not found.');
@@ -41,8 +40,8 @@ const resolvers = {
     },
 
     saveClothes: async (parent, args, context) => {
-      // When click 'Save these clothes' button 'context.user' has value of 'undefined.'
-      // If 'context.user' has the value of 'undefined', perhaps nothing happens in 'saveClothes' resolver?
+      console.log("Context.user from 'saveClothes' in 'resolvers:", context.user); // Returns the user
+      
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           {
@@ -55,9 +54,13 @@ const resolvers = {
           },
           { new: true }
         );
-        return updatedUser;
+        if (updatedUser) {
+          return updatedUser;
+        } else {
+          throw new Error('User not found.');
+        }
       }
-      throw new Error('User not found.');
+      throw new Error('User was not in context.');
     },
 
     removeClothes: async (parent, args, context) => {

@@ -93,7 +93,7 @@ const SearchClothes = () => {
 
         try {
             const response = await saveClothesMutation({
-                variables: { clothesData: { ...clothesToSave }},
+                variables: { input: { ...clothesToSave }},
                 context: {
                     headers: {
                         Authorization: token ? `Bearer ${token}` : '',

@@ -28,7 +28,7 @@ module.exports = {
       // console.log('data', data);
 
       req.user = data;
-      // console.log('Decoded user:', req.user);
+      console.log('Decoded user:', req.user);
 
     } catch (error) {
       console.log(error);

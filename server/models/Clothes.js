@@ -12,8 +12,7 @@ const clothesSchema = new Schema({
     required: true,
   },
   price: {
-    type: Number,
-    min: 0.99,
+    type: String,
     required: true,
   },
   size: {
