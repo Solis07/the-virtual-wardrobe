@@ -6,6 +6,9 @@ This application is called "The Virtual Wardrobe." It is a MERN-stack single-pag
 
 This app uses MongoDB, Express, React, Node, and GraphQL. Users can save clothes that they like in the database and look at them again later, deciding whether to keep or delete them.
 
+## Screenshot:
+![ph](https://github.com/Farjana-04/MERN-Book-Search-Engine/assets/92415181/86dd9d83-fb23-4b87-a6d8-32570c47f665)
+
 ## Table of Contents
 
 - [Installation](#installation)
@@ -33,15 +36,16 @@ Look at this app to get a basic understanding of how an e-commerce site is set u
 
 Please contact us if you have any questions via email:
 
-Scott: sjdoublec@gmail.com 
+[Scott Clarke](mailto:sjdoublec@gmail.com) 
 
-Leonel: l.jsolis52@yahoo.com
+[Leonel Solis](mailto:l.jsolis52@yahoo.com)
 
-Kiara: kiarajohnson91@gmail.com
+[Kiara Johnson](mailto:kiarajohnson91@gmail.com)
 
-Amber: amberdiehl@outlook.com
+[Amber Diehl](mailto:amberdiehl@outlook.com)
 
-Farjana: farjana.akhter085@gmail.com
+[Farjana Akhter](mailto:farjana.akhter085@gmail.com)
+
 
 ## Badges:
 
@@ -58,3 +62,5 @@ Farjana: farjana.akhter085@gmail.com
 ## Screenshot:
 
 ![the-virtual-wardrobe](/assets/spider-man-hoodies-screenshot.png)
+
+## Deployed Application Link:
