@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
@@ -25,6 +26,15 @@ if (process.env.NODE_ENV === "production") {
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../client"));
+});
+
+app.get('/api/key', (req, res) => {
+  const apiKey = process.env.API_KEY;
+  if (apiKey) {
+    res.json({ apiKey });
+  } else {
+    res.status(500).json({ error: 'API key not found' });
+  }
 });
 
 const startApolloServer = async () => {
