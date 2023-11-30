@@ -16,3 +16,9 @@ export const GET_ME = gql`
     }
   }
 `;
+
+export const GET_APICLOTHES = gql`
+query apiClothes($query: String!) {
+  apiClothes(query: $query)
+}
+`;

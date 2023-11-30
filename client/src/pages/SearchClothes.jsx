@@ -11,18 +11,17 @@ import {
 
 import Auth from '../utils/auth';
 
-import { searchClothes } from '../utils/API';
-import { GET_ME } from '../utils/queries';
+import { GET_ME, GET_APICLOTHES } from '../utils/queries';
 import { SAVE_CLOTHES } from '../utils/mutations';
 import { saveClothesIds, getSavedClothesIds } from '../utils/localStorage';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 
 const SearchClothes = () => {
     // Empty array 'state' holds returned Amazon Prices API data:
     const [searchedClothes, setSearchedClothes] = useState([]);
 
     // Empty quotes 'state' holds search field data:
-    const [searchInput, setSearchInput] = useState('');
+    const [searchInput, setSearchInput] = useState('shoes');
 
     // 'getSavedClothesIds()' function 'state' holds local storage 'saved_clothes':
     const [savedClothesIds, setSavedClothesIds] = useState(getSavedClothesIds());
@@ -36,6 +35,15 @@ const SearchClothes = () => {
             { query: GET_ME },
         ]
     });
+    
+    const { data } = useQuery(GET_APICLOTHES, { variables: { query: searchInput } })
+    const [clothesApi, setClothesApi] = useState();
+
+    useEffect(() => { 
+        if (!data) return
+        setClothesApi(JSON.parse(data.apiClothes))
+        console.log(clothesApi);
+    }, [data])
 
     // useEffect hook will save 'savedClothesIds' list to localStorage.
     // Setting 'savedClothesIds' in the dependency array means the effect will run whenever 'savedClothesIds' changes:
@@ -48,34 +56,6 @@ const SearchClothes = () => {
 
         if(!searchInput) {
             return false;
-        }
-
-        try {
-            const response = await searchClothes(searchInput);
-
-            if (!response.ok) {
-                throw new Error('Something went wrong.');
-            }
-
-            const responseData = await response.json();
-
-            if (Array.isArray(responseData)) {
-            const clothesData = responseData.map((clothes) => ({
-                    clothesId: clothes.ASIN,
-                    title: clothes.title,
-                    price: clothes.price,
-                    image: clothes.imageUrl
-                }));
-
-            setSearchedClothes(clothesData);
-            setSearchInput('');
-            
-            } else {
-                console.error('Invalid response format:', responseData)
-            }
-
-        } catch (err) {
-            setError(err.message);
         }
     };
 
@@ -151,13 +131,11 @@ const SearchClothes = () => {
                         : 'Search for clothes to begin'}
                 </h2>
                 <Row>
-                    {searchedClothes.map((clothes) => {
+                    {clothesApi ? (clothesApi.map((clothes) => {
                         return (
                             <Col md='4' key={clothes.clothesId}>
                                 <Card border='dark'>
-                                    {clothes.image ? (
-                                        <Card.Img src={clothes.image} alt={`The image of ${clothes.title}`} variant='top' />
-                                    ) : null}
+                                        <Card.Img src={clothes.imageUrl} alt={`The image of ${clothes.title}`} variant='top' />
                                         <Card.Body>
                                             <Card.Title>{clothes.title}</Card.Title>
                                             <p className='small'>Price: {clothes.price}</p>
@@ -175,7 +153,7 @@ const SearchClothes = () => {
                                 </Card>
                             </Col>
                         );
-                    })}
+                    })): 'Loading...'}
                 </Row>
             </Container>
         </>

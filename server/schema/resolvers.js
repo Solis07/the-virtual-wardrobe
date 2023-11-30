@@ -1,5 +1,6 @@
 const { User, Clothes } = require('../models');
 const { signToken } = require('../utils/auth');
+require('dotenv').config();
 
 const resolvers = {
   Query: {
@@ -13,6 +14,33 @@ const resolvers = {
       }
       throw new Error('User not found.');
     },
+
+    apiClothes: async (parent, args, context) => {
+      console.log('HELLO!')
+      try {
+        const key = process.env.PRICE_API;
+        const query = args.query;
+        console.log(key, query);
+      const res = await fetch (`https://amazon-price1.p.rapidapi.com/search?keywords=${encodeURIComponent(query)}&marketplace=ES`, {
+    method: 'GET',
+    headers: {
+              'Content-Type': 'application/json',
+      // Scott's 2nd API key:
+              'X-RapidAPI-Key': key,
+              'X-RapidAPI-Host': 'amazon-price1.p.rapidapi.com'
+            }
+        })
+        const data = await res.json()
+          console.log(data);
+        // return JSON.stringify(data);
+        return (JSON.stringify(data));
+
+    } catch(error) {
+      console.log(error);
+      return error;
+    }
+  }
+      
   },
 
   Mutation: {
